@@ -13,7 +13,6 @@ const checkJwt = (req: RequestExt, res: Response, next: NextFunction) => {
     if (!isUser) {
       return handleHttp(res, { error: INVALID_TOKEN.KEY });
     } else {
-      console.log(isUser);
       req.user = isUser;
       next();
     }

@@ -63,7 +63,6 @@ const loginUser = async ({ email, password }: IAuth) => {
     };
   }
 
-  console.log(checkIs.id);
   const token = generateToken(checkIs.id);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

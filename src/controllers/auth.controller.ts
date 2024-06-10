@@ -6,7 +6,6 @@ import { INTERNAL_ERROR } from '../utils/constants/error.handle';
 
 const registerCtrl = async ({ body }: Request, res: Response) => {
   try {
-    console.log(body);
     const responseUser = await registerNewUser({
       ...body,
       birthday: new Date(body.birthday),

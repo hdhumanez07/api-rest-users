@@ -9,7 +9,7 @@ import { checkJwt } from '../middlewares/session';
 const router = Router();
 
 router.get('/', checkJwt, getUsersCtrl);
-router.get('/favorites/:iduser', getPokemonsByUserCtrl);
+router.get('/favorites/:iduser', checkJwt, getPokemonsByUserCtrl);
 router.post('/favorites', checkJwt, savePokemonCtrl);
 router.delete('/favorites/:idpokemon', checkJwt, deletePokemonCtrl);
 

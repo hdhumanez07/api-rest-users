@@ -7,7 +7,6 @@ const getPokemons = async (params: object) => {
     `${process.env.POKEMON_API_URL}/pokemon${queryParams}`,
   );
   const data = await pokemones.json();
-  console.log(data);
   return data;
 };
 
