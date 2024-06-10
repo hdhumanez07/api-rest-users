@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { handleHttp } from '../utils/error.handle';
 import {
-  createUser,
   getUsers,
   getPokemonsByUser,
   savePokemon,
@@ -16,16 +15,6 @@ const getUsersCtrl = async (_req: Request, res: Response) => {
   try {
     const responseUser = await getUsers();
     return response(res, responseUser);
-  } catch (error) {
-    console.error(error);
-    handleHttp(res, INTERNAL_ERROR);
-  }
-};
-
-const createUserCtrl = async (req: Request, res: Response) => {
-  try {
-    const responseUser = await createUser(req.body);
-    res.send(responseUser);
   } catch (error) {
     console.error(error);
     handleHttp(res, INTERNAL_ERROR);
@@ -71,7 +60,6 @@ const deletePokemonCtrl = async (req: RequestExt, res: Response) => {
 
 export {
   getUsersCtrl,
-  createUserCtrl,
   getPokemonsByUserCtrl,
   savePokemonCtrl,
   deletePokemonCtrl,

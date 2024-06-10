@@ -1,9 +1,9 @@
 import UserModel from '../models/user.model';
-import { IUser } from '../interfaces/user.interface';
 import PokemonModel from '../models/pokemon.model';
 import { IPokemon } from '../interfaces/pokemon.interface';
 import { ERROR_HANDLE } from '../utils/constants/error.handle';
-const { POKEMON_ALREADY_EXISTS } = ERROR_HANDLE;
+import { validatePokemon } from '../schemas/pokemon.schema';
+const { POKEMON_ALREADY_EXISTS, INVALID_PAYLOAD } = ERROR_HANDLE;
 
 const getUsers = async () => {
   const users = await UserModel.find()
@@ -11,17 +11,6 @@ const getUsers = async () => {
     .populate('city department');
   return users;
 };
-
-const getUser = async (id: string) => {
-  const user = await UserModel.findById(id);
-  return user;
-};
-
-const createUser = async (user: IUser) => {
-  const newUser = await UserModel.create(user);
-  return newUser;
-};
-
 const getPokemonsByUser = async (iduser: string) => {
   const pokemons = await PokemonModel.find({ user: iduser });
   return pokemons;
@@ -37,6 +26,15 @@ const savePokemon = async (data: IPokemon) => {
       error: POKEMON_ALREADY_EXISTS.KEY,
     };
   }
+  const validatePayload = validatePokemon(data);
+
+  if (!validatePayload.success) {
+    return {
+      error: INVALID_PAYLOAD.KEY,
+      data: validatePayload.error.message,
+    };
+  }
+
   const newPokemon = await PokemonModel.create(data);
   return {
     data: newPokemon,
@@ -48,11 +46,4 @@ const deletePokemon = async (idpokemon: string) => {
   return pokemon;
 };
 
-export {
-  getUser,
-  createUser,
-  getUsers,
-  getPokemonsByUser,
-  savePokemon,
-  deletePokemon,
-};
+export { getUsers, getPokemonsByUser, savePokemon, deletePokemon };
