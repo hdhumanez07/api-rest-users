@@ -9,11 +9,11 @@
  * "?key=value&key2=value2"
  */
 
-export interface IQueryParams<T> {
-  [key: string]: T;
+export interface IQueryParams {
+  [key: string]: string | number | boolean;
 }
 
-const addQueryParams = (queryParams: IQueryParams<object>) => {
+const addQueryParams = (queryParams: IQueryParams) => {
   if (Object.keys(queryParams).length === 0) return '';
   let query = '?';
   query += Object.keys(queryParams)
